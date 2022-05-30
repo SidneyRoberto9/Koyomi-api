@@ -17,15 +17,24 @@ export default class AuthService {
 
   public async register(userDto: userCreateDto) {
     try {
-      return await new this.userModel({
+      const user = await this.userModel.findOne({
+        $or: [{ email: userDto.email }, { username: userDto.username }],
+      });
+
+      if (user) {
+        throw new Error("User already exists!!");
+      }
+
+      let UserTemp = {
+        username: userDto.username,
+        email: userDto.email,
         password: encryptPassword(userDto.password),
         profilePic: userProfilePicUrl,
-        ...userDto,
-      })
-        .save()
-        .then(() => ({
-          message: `User ${userDto.username} created successfully`,
-        }));
+      };
+
+      return await new this.userModel(UserTemp).save().then(() => ({
+        message: `User ${userDto.username} created successfully`,
+      }));
     } catch (error) {
       throw error.message;
     }

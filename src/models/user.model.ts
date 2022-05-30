@@ -8,6 +8,7 @@ const UserSchema = new Schema(
     password: { type: String, required: true },
     profilePic: { type: String, default: "" },
     role: { type: String, default: role.DEFAULT },
+    animeWatched: { type: Array, default: [] },
   },
   { timestamps: true }
 );

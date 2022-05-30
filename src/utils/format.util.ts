@@ -35,6 +35,17 @@ export const formatUserToken = (user: any, accessToken: string) => {
     email: user.email,
     profilePic: user.profilePic,
     accessToken: accessToken,
+    animeWatched: user.animeWatched,
+  };
+};
+
+export const formatUser = (user: any) => {
+  return {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    profilePic: user.profilePic,
+    animeWatched: user.animeWatched,
   };
 };
 

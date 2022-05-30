@@ -1,4 +1,16 @@
 import { Document } from "mongoose";
+import { AnimeReturnDto } from "./anime.interface";
+
+export interface AnimeWatched {
+  anime: AnimeReturnDto;
+  watchedEpisodes: number;
+  watchedEpisodeWeek: boolean;
+}
+
+export enum role {
+  ADMIN = "ADMIN",
+  DEFAULT = "DEFAULT",
+}
 
 export interface userModelI extends Document {
   username: string;
@@ -6,11 +18,7 @@ export interface userModelI extends Document {
   password: string;
   profilePic: string;
   role: role;
-}
-
-export enum role {
-  ADMIN = "ADMIN",
-  DEFAULT = "DEFAULT",
+  animeWatched: AnimeWatched[];
 }
 
 export interface userCreateDto {
@@ -19,6 +27,7 @@ export interface userCreateDto {
   password: string;
   profilePic?: string;
   role?: role;
+  animeWatched?: AnimeWatched[];
 }
 
 export interface loginDto {

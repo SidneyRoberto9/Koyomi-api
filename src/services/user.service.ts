@@ -23,6 +23,21 @@ export default class UserService {
     }
   }
 
+  public async getRoleUser(id: string) {
+    try {
+      return await this.userModel
+        .findById(id)
+        .then((user) => ({
+          Result: `Username: ${user.username} | role: ${user.role}`,
+        }))
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
   public async deleteUser(id: string) {
     try {
       return await this.userModel

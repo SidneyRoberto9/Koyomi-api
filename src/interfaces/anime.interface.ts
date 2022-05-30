@@ -34,7 +34,7 @@ export interface AnimeUpdateDto {
 }
 
 export interface AnimeReturnDto {
-  _id: string;
+  id: string;
   title: string;
   image: string;
   date: animeDate;
