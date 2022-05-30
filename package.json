@@ -1,6 +1,6 @@
 {
   "name": "animes-api",
-  "version": "2.0",
+  "version": "1.0.0",
   "description": "api in order to control an anime calendar and manage users of a website, jwt, mongodb and an outside api called Jikan are used to add the season's anime",
   "license": "ISC",
   "main": "src/server.ts",
