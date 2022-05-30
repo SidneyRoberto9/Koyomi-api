@@ -1,10 +1,12 @@
 import {
   AnimeCreateDto,
+  AnimeReturnDto,
   AnimeUpdateDto,
 } from "../../interfaces/anime.interface";
 import AnimeService from "../../services/anime.service";
 import { Router, Request, Response } from "express";
 import Container from "typedi";
+import { formatAnimeReturn } from "../../utils/format.util";
 const route = Router();
 
 export default (app: Router) => {
@@ -17,7 +19,9 @@ export default (app: Router) => {
     try {
       await animeServiceInstance
         .findAllAnime()
-        .then((anime) => res.status(200).json(anime))
+        .then((anime) => {
+          res.status(200).json(anime.map((anime) => formatAnimeReturn(anime)));
+        })
         .catch((error) => {
           throw error;
         });

@@ -37,3 +37,14 @@ export const formatUserToken = (user: any, accessToken: string) => {
     accessToken: accessToken,
   };
 };
+
+export const formatAnimeReturn = (anime: any) => {
+  return {
+    _id: anime._id,
+    title: anime.title,
+    image: anime.image,
+    date: anime.date,
+    episodes: anime.episodes,
+    externalLinks: anime.externalLinks,
+  };
+};

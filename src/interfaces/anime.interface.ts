@@ -32,3 +32,12 @@ export interface AnimeUpdateDto {
   anime: AnimeModelI;
   id: string;
 }
+
+export interface AnimeReturnDto {
+  _id: string;
+  title: string;
+  image: string;
+  date: animeDate;
+  episodes: number;
+  externalLinks: link[];
+}
