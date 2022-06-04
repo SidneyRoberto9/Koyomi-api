@@ -44,7 +44,7 @@ export default (app: Router) => {
     try {
       await userServiceInstance
         .getUserById(req.params.id)
-        .then((role) => res.status(200).json(role))
+        .then((users) => res.status(200).json(users))
         .catch((error) => {
           throw error;
         });

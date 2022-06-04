@@ -27,7 +27,7 @@ export default class UserService {
   public async getUserById(id: string) {
     try {
       return await this.userModel
-        .find({ _id: id })
+        .findById(id)
         .then((user) => formatUser(user))
         .catch((error) => {
           throw error;
