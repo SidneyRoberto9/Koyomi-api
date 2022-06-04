@@ -1,5 +1,6 @@
 import { Inject, Service } from "typedi";
 import { UserModel } from "../models/user.model";
+import { formatUser } from "../utils/format.util";
 
 @Service()
 export default class UserService {
@@ -26,11 +27,8 @@ export default class UserService {
   public async getUserById(id: string) {
     try {
       return await this.userModel
-        .find({_id: id})
-        .then((user) => ({
-          Result: `Sucessefull fech ${id}`,
-          User: user,
-        }))
+        .find({ _id: id })
+        .then((user) => formatUser(user))
         .catch((error) => {
           throw error;
         });
