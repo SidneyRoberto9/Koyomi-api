@@ -23,6 +23,22 @@ export default class UserService {
     }
   }
 
+  public async getUserById(id: string) {
+    try {
+      return await this.userModel
+        .find({_id: id})
+        .then((user) => ({
+          Result: `Sucessefull fech ${user.username}`,
+          User: user,
+        }))
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
   public async getRoleUser(id: string) {
     try {
       return await this.userModel

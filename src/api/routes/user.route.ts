@@ -40,6 +40,19 @@ export default (app: Router) => {
     }
   });
 
+  route.get("/:id", async (req: Request, res: Response) => {
+    try {
+      await userServiceInstance
+        .getUserById(req.params.id)
+        .then((role) => res.status(200).json(role))
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  });
+
   route.delete("/:id", async (req: Request, res: Response) => {
     try {
       await userServiceInstance
