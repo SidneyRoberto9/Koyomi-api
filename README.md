@@ -52,7 +52,6 @@ The following tools were used in this project:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
-- [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [JWT](https://jwt.io/)
 - [MongoDB](https://www.mongodb.com/pt-br)
