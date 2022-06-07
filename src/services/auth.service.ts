@@ -1,9 +1,10 @@
+import { Inject, Service } from "typedi";
+import { sign } from "jsonwebtoken";
+
 import { decryptPassword, encryptPassword } from "../utils/validate.util";
 import { loginDto, userCreateDto } from "../interfaces/user.interface";
 import { formatUserToken } from "../utils/format.util";
 import { UserModel } from "../models/user.model";
-import { Inject, Service } from "typedi";
-import { sign } from "jsonwebtoken";
 import config from "../config";
 
 const userProfilePicUrl =

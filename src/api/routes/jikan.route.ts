@@ -1,6 +1,8 @@
 import JikanService from "../../services/jikan.service";
+
 import { Router, Request, Response } from "express";
 import Container from "typedi";
+
 const route = Router();
 
 export default (app: Router) => {

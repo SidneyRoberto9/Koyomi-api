@@ -1,7 +1,9 @@
 import { Request, Response, Router } from "express";
 import Container from "typedi";
+
 import UserService from "../../services/user.service";
 import { formatUser } from "../../utils/format.util";
+
 const route = Router();
 
 export default (app: Router) => {
@@ -9,22 +11,22 @@ export default (app: Router) => {
 
   const userServiceInstance = Container.get(UserService);
 
-  route.get("/all", async (req: Request, res: Response) => {
-    try {
-      await userServiceInstance
-        .getAllUsers()
-        .then((data) =>
-          res.status(200).json({
-            Result: data.Result,
-            Users: data.Users.map((user) => formatUser(user)),
-          })
-        )
-        .catch((error) => {
-          throw error;
-        });
-    } catch (err) {
-      res.status(400).json(err);
-    }
+  route.get("/status", (req: Request, res: Response) => {
+    userServiceInstance
+      .getUserStatus()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => {
+        res.status(400).json(error);
+      });
+  });
+
+  route.get("/all", (req: Request, res: Response) => {
+    userServiceInstance
+      .getAllUsers()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => {
+        res.status(400).json(error);
+      });
   });
 
   route.get("/role/:id", async (req: Request, res: Response) => {

@@ -1,6 +1,7 @@
+import { Inject, Service } from "typedi";
+
 import { AnimeCreateDto, AnimeUpdateDto } from "../interfaces/anime.interface";
 import { AnimeModel } from "../models/anime.model";
-import { Inject, Service } from "typedi";
 
 @Service()
 export default class AnimeService {

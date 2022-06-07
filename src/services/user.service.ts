@@ -1,4 +1,5 @@
 import { Inject, Service } from "typedi";
+
 import { UserModel } from "../models/user.model";
 import { formatUser } from "../utils/format.util";
 
@@ -8,14 +9,29 @@ export default class UserService {
     this.userModel = UserModel;
   }
 
-  public async getAllUsers() {
+  public async getUserStatus() {
     try {
       return await this.userModel
         .find()
         .then((user) => ({
-          Result: "Successfully fetched all users",
-          Users: user,
+          Registered: user.length,
+          Emails: [...user.map((u) => u.email)],
         }))
+        .catch((error) => {
+          throw error;
+        });
+
+      return;
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  public async getAllUsers() {
+    try {
+      return await this.userModel
+        .find()
+        .then((user) => formatUser(user))
         .catch((error) => {
           throw error;
         });

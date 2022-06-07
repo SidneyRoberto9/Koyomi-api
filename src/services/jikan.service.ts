@@ -1,7 +1,8 @@
-import { formatJk, formatJkArray } from "../utils/format.util";
-import { AnimeModelI } from "../interfaces/anime.interface";
 import { Service } from "typedi";
 import axios from "axios";
+
+import { formatJk, formatJkArray } from "../utils/format.util";
+import { AnimeModelI } from "../interfaces/anime.interface";
 
 @Service()
 export default class JikanService {
