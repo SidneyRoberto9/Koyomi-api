@@ -1,6 +1,6 @@
 import { verify } from "jsonwebtoken";
 import CryptoJS from "crypto-js";
-import config from "../config";
+import config from "../../config";
 
 export default function validate(req: any, res: any, next: () => void) {
   const authHeader = req.headers.token;
