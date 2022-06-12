@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
-import config from "../config";
-import express from "express";
-import { Server } from "http";
-import routes from "../api";
-import "reflect-metadata";
-import cors from "cors";
+import { errorHandle } from './../utils/validate.util';
+import mongoose from 'mongoose';
+import config from '../config';
+import express from 'express';
+import { Server } from 'http';
+import routes from '../api';
+import 'reflect-metadata';
+import cors from 'cors';
 
 export default class SetupApplication {
   private server?: Server;
@@ -18,11 +19,12 @@ export default class SetupApplication {
   }
 
   private setupRoutes(): void {
-    this.app.use("/api", routes());
+    this.app.use('/api', routes());
+    this.app.use(errorHandle);
   }
 
   private setupExpress(): void {
-    this.app.enable("trust proxy");
+    this.app.enable('trust proxy');
     this.app.use(cors());
     this.app.use(express.json());
   }
@@ -30,7 +32,7 @@ export default class SetupApplication {
   private async setupMongoose(): Promise<void> {
     await mongoose
       .connect(config.mongoUrl)
-      .then(() => console.log("DB Connected!"))
+      .then(() => console.log('DB Connected!'))
       .catch((err) => console.log(err));
   }
 

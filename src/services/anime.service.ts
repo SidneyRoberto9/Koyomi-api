@@ -1,100 +1,121 @@
-import { Inject, Service } from "typedi";
+import { Inject, Service } from 'typedi';
 
-import { AnimeCreateDto, AnimeUpdateDto } from "../interfaces/anime.interface";
-import { AnimeModel } from "../models/anime.model";
+import { AnimeCreateDto, AnimeUpdateDto } from '../interfaces/anime.interface';
+import { AnimeModel } from '../models/anime.model';
+import { isEmpty } from './../utils/format.util';
 
 @Service()
 export default class AnimeService {
-  constructor(@Inject("animeModel") private animeModel: Models.AnimeModel) {
+  constructor(@Inject('animeModel') private animeModel: Models.AnimeModel) {
     this.animeModel = AnimeModel;
   }
 
   public async findAllAnime() {
     try {
-      return await this.animeModel.find().catch(() => {
-        throw new Error("No Anime Found!!");
-      });
+      const animes = await this.animeModel.find();
+
+      if (isEmpty(animes)) {
+        throw new Error('No Anime Found!!');
+      }
+
+      return animes;
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async findAnimeById(id: string) {
     try {
-      return await this.animeModel.find({ _id: id }).catch(() => {
+      const anime = await this.animeModel.find({ _id: id });
+
+      if (isEmpty(anime)) {
         throw new Error(`Anime Not Found With This Id: ${id}`);
-      });
+      }
+
+      return anime;
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async getAiringAnimes() {
     try {
-      return await this.animeModel.find({ "date.airing": true }).catch(() => {
-        throw new Error("No Anime in Airing Found!!");
-      });
+      const airingAnime = await this.animeModel.find({ 'date.airing': true });
+
+      if (isEmpty(airingAnime)) {
+        throw new Error('No Anime in Airing Found!!');
+      }
+
+      return airingAnime;
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async saveAnime(AnimeCreateDto: AnimeCreateDto) {
     try {
-      return await new this.animeModel(AnimeCreateDto)
-        .save()
-        .then(() => ({
-          Result: `${AnimeCreateDto.title} Successfully Saved!!`,
-        }))
-        .catch(() => {
-          throw new Error(`${AnimeCreateDto.title} Not Saved!!`);
-        });
+      const anime = new this.animeModel(AnimeCreateDto).save();
+
+      if (isEmpty(anime)) {
+        throw new Error(`${AnimeCreateDto.title} Not Saved!!`);
+      }
+
+      return {
+        Result: `${AnimeCreateDto.title} Successfully Saved!!`,
+      };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async changeAiringStatusAll(status: boolean) {
     try {
-      return await this.animeModel
+      const anime = await this.animeModel
         .find()
-        .updateMany({}, { $set: { "date.airing": status } })
-        .then(() => ({ Result: `All Anime Airing Status set ${status}!!` }))
-        .catch(() => {
-          throw new Error(`Change all Airing Status Failed!!`);
-        });
+        .updateMany({}, { $set: { 'date.airing': status } });
+
+      if (isEmpty(anime)) {
+        throw new Error(`Change all Airing Status Failed!!`);
+      }
+
+      return { Result: `All Anime Airing Status set ${status}!!` };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async removeAnime(id: string) {
     try {
-      return await this.animeModel
-        .findByIdAndDelete(id)
-        .then(() => ({ message: `Deleting Anime With That Id: ${id}` }))
-        .catch(() => {
-          throw new Error(`Anime Not Found With This Id: ${id}`);
-        });
+      const anime = await this.animeModel.findByIdAndDelete(id);
+
+      if (isEmpty(anime)) {
+        throw new Error(`Anime Not Found With This Id: ${id}`);
+      }
+
+      return { message: `Deleting Anime With That Id: ${id}` };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
   public async updateAnime(animeUpdateDto: AnimeUpdateDto) {
     try {
-      return await this.animeModel
-        .updateOne({ _id: animeUpdateDto.id }, animeUpdateDto.anime)
-        .then(() => ({
-          message: `Updated Anime With this Name: ${animeUpdateDto.anime.title}`,
-        }))
-        .catch(() => {
-          throw new Error(
-            `Anime Not Found With This Name: ${animeUpdateDto.anime.title}`
-          );
-        });
+      const anime = await this.animeModel.updateOne(
+        { _id: animeUpdateDto.id },
+        animeUpdateDto.anime
+      );
+
+      if (isEmpty(anime)) {
+        throw new Error(
+          `Anime Not Found With This Name: ${animeUpdateDto.anime.title}`
+        );
+      }
+
+      return {
+        message: `Updated Anime With this Name: ${animeUpdateDto.anime.title}`,
+      };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 }

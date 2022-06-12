@@ -59,3 +59,10 @@ export const formatAnimeReturn = (anime: any) => {
     externalLinks: anime.externalLinks,
   };
 };
+
+export const isEmpty = (obj: any) => {
+  if (obj === null || obj === undefined || obj === '') {
+    return true;
+  }
+  return false;
+};

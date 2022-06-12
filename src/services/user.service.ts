@@ -1,83 +1,87 @@
-import { Inject, Service } from "typedi";
+import { Inject, Service } from 'typedi';
 
-import { UserModel } from "../models/user.model";
-import { formatUser } from "../utils/format.util";
+import { UserModel } from '../models/user.model';
+import { formatUser } from '../utils/format.util';
+import { isEmpty } from './../utils/format.util';
 
 @Service()
 export default class UserService {
-  constructor(@Inject("userModel") private userModel: Models.UserModel) {
+  constructor(@Inject('userModel') private userModel: Models.UserModel) {
     this.userModel = UserModel;
   }
 
-  public async getUserStatus() {
+  async getUserStatus() {
     try {
-      return await this.userModel
-        .find()
-        .then((user) => ({
-          Registered: user.length,
-          Emails: [...user.map((u) => u.email)],
-        }))
-        .catch((error) => {
-          throw error;
-        });
+      const user = await this.userModel.find();
 
-      return;
+      if (isEmpty(user)) {
+        throw new Error('No User Found!!');
+      }
+
+      return {
+        Registered: user.length,
+        Emails: [...user.map((u) => u.email)],
+      };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
-  public async getAllUsers() {
+  async getAllUsers() {
     try {
-      return await this.userModel
-        .find()
-        .then((user) => formatUser(user))
-        .catch((error) => {
-          throw error;
-        });
+      const user = await this.userModel.find();
+
+      if (isEmpty(user)) {
+        throw new Error('No User Found!!');
+      }
+
+      return formatUser(user);
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
-  public async getUserById(id: string) {
+  async getUserById(id: string) {
     try {
-      return await this.userModel
-        .findById(id)
-        .then((user) => formatUser(user))
-        .catch((error) => {
-          throw error;
-        });
+      const user = await this.userModel.findById(id);
+
+      if (isEmpty(user)) {
+        throw new Error('No User Found!!');
+      }
+
+      return formatUser(user);
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
-  public async getRoleUser(id: string) {
+  async getRoleUser(id: string) {
     try {
-      return await this.userModel
-        .findById(id)
-        .then((user) => ({
-          Result: `Username: ${user.username} | role: ${user.role}`,
-        }))
-        .catch((error) => {
-          throw error;
-        });
+      const user = await this.userModel.findById(id);
+
+      if (isEmpty(user)) {
+        throw new Error('No User Found!!');
+      }
+
+      return {
+        Result: `Username: ${user.username} | role: ${user.role}`,
+      };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 
-  public async deleteUser(id: string) {
+  async deleteUser(id: string) {
     try {
-      return await this.userModel
-        .findByIdAndDelete(id)
-        .then(() => ({ Result: `Successfully delete ${id} user` }))
-        .catch((error) => {
-          throw error;
-        });
+      const user = await this.userModel.findByIdAndDelete(id);
+
+      if (isEmpty(user)) {
+        throw new Error('No User Found!!');
+      }
+
+      return { Result: `Successfully delete ${id} user` };
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 }
