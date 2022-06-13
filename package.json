@@ -5,9 +5,10 @@
   "license": "ISC",
   "main": "src/server.ts",
   "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules server.ts",
+    "start": "node build/server.js",
     "build": "tsc",
-    "start": "npm run build && node build/server.js",
-    "dev": "ts-node-dev --transpile-only src/server.ts"
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "devDependencies": {
