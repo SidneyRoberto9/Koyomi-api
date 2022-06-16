@@ -1,17 +1,17 @@
-import JikanService from "../../services/jikan.service";
+import { Request, Response, Router } from 'express';
+import Container from 'typedi';
 
-import { Router, Request, Response } from "express";
-import Container from "typedi";
+import JikanService from '../../services/jikan.service';
 
 const route = Router();
 
 export default (app: Router) => {
-  app.use("/jk", route);
+  app.use('/jk', route);
 
   const jkServiceInstance = Container.get(JikanService);
 
   //Get Anime By MAL ID
-  route.get("/:id", async (req: Request, res: Response) => {
+  route.get('/:id', async (req: Request, res: Response) => {
     try {
       await jkServiceInstance
         .getAnime(req.params.id)
@@ -24,7 +24,7 @@ export default (app: Router) => {
     }
   });
 
-  route.get("/anime/random", async (req: Request, res: Response) => {
+  route.get('/anime/random', async (req: Request, res: Response) => {
     try {
       await jkServiceInstance
         .getRandomAnime()
@@ -37,7 +37,7 @@ export default (app: Router) => {
     }
   });
 
-  route.get("/anime/recommend", async (req: Request, res: Response) => {
+  route.get('/anime/recommend', async (req: Request, res: Response) => {
     try {
       await jkServiceInstance
         .getRecommendations()
@@ -50,10 +50,23 @@ export default (app: Router) => {
     }
   });
 
-  route.get("/anime/season/now", async (req: Request, res: Response) => {
+  route.get('/anime/season/now', async (req: Request, res: Response) => {
     try {
       await jkServiceInstance
         .getAnimesSeasonNow()
+        .then((jk) => res.status(200).json(jk))
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  });
+
+  route.get('/anime/:name', async (req: Request, res: Response) => {
+    try {
+      await jkServiceInstance
+        .getAnimeByName(req.params.name)
         .then((jk) => res.status(200).json(jk))
         .catch((error) => {
           throw error;

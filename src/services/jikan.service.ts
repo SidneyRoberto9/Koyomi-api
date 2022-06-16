@@ -23,6 +23,21 @@ export default class JikanService {
     }
   }
 
+  async getAnimeByName(name: string) {
+    const url: string = `https://api.jikan.moe/v4/anime?q=${name}&limit=1`;
+
+    try {
+      return await axios
+        .get(url)
+        .then((data) => data.data.data[0])
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getRandomAnime() {
     const url: string = 'https://api.jikan.moe/v4/random/anime';
 
