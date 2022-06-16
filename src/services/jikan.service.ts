@@ -3,6 +3,7 @@ import { Service } from 'typedi';
 
 import { AnimeModelI } from '../interfaces/anime.interface';
 import { formatJkArray } from '../utils/format.util';
+import { formatJkGetAnimeByName } from './../utils/format.util';
 
 @Service()
 export default class JikanService {
@@ -29,7 +30,7 @@ export default class JikanService {
     try {
       return await axios
         .get(url)
-        .then((data) => data.data.data[0])
+        .then(async (data) => await formatJkGetAnimeByName(data.data.data[0]))
         .catch((error) => {
           throw error;
         });

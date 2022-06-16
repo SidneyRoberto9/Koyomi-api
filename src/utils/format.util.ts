@@ -1,3 +1,7 @@
+import { translate } from 'free-translate';
+
+//Powered by https://www.npmjs.com/package/free-translate
+
 export const formatJk = (data: any) => {
   return {
     title: data.title,
@@ -65,4 +69,23 @@ export const isEmpty = (obj: any) => {
     return true;
   }
   return false;
+};
+
+export const formatJkGetAnimeByName = async (anime: any) => {
+  return {
+    title: anime.title,
+    titleJapanese: anime.title_japanese,
+    image: anime.images.jpg.image_url,
+    episodes: anime.episodes,
+    season: anime.season,
+    year: anime.year,
+    rating: anime.rating,
+    genres: [
+      ...anime.genres.map((genre: any) => genre.name),
+      ...anime.explicit_genres.map((genre: any) => genre.name),
+      ...anime.themes.map((genre: any) => genre.name),
+      ...anime.demographics.map((genre: any) => genre.name),
+    ],
+    synopsis: await translate(anime.synopsis, { from: 'en', to: 'pt-BR' }),
+  };
 };
