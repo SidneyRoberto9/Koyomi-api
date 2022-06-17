@@ -24,7 +24,7 @@ export default class AuthService {
       });
 
       if (user) {
-        throw new Error('User already exists!!');
+        throw new Error('Usuário Já Registrado!!');
       }
 
       let UserTemp = {
@@ -37,11 +37,11 @@ export default class AuthService {
       const savedUser = await new this.userModel(UserTemp).save();
 
       if (isEmpty(savedUser)) {
-        throw new Error('User Not Saved!!');
+        throw new Error('Usuário não foi Salvo!!');
       }
 
       return {
-        message: `User ${userDto.username} created successfully`,
+        message: `Usuário ${userDto.username} Criado com Sucesso!!`,
       };
     } catch (error) {
       throw error.message;
@@ -54,13 +54,13 @@ export default class AuthService {
         $or: [{ email: loginDto.email }, { username: loginDto.username }],
       });
 
-      if (!user) throw new Error('Wrong Email or Username!!');
+      if (!user) throw new Error('Email ou Nome de Usuário Invalido!!');
 
       const userJson = JSON.parse(JSON.stringify(user));
       const decryptedPassword = decryptPassword(user.password);
 
       if (decryptedPassword !== loginDto.password)
-        throw new Error('Incorrect password');
+        throw new Error('Senha Incorreta!!');
 
       const accessToken = sign(
         { id: user._id, role: user.role },
