@@ -1,7 +1,3 @@
-import { translate } from 'free-translate';
-
-//Powered by https://www.npmjs.com/package/free-translate
-
 export const formatJk = (data: any) => {
   return {
     title: data.title,
@@ -86,6 +82,6 @@ export const formatJkGetAnimeByName = async (anime: any) => {
       ...anime.themes.map((genre: any) => genre.name),
       ...anime.demographics.map((genre: any) => genre.name),
     ],
-    synopsis: await translate(anime.synopsis, { from: 'en', to: 'pt-BR' }),
+    synopsis: anime.synopsis,
   };
 };
