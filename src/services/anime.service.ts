@@ -20,7 +20,7 @@ export default class AnimeService {
 
       return animes;
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -34,7 +34,7 @@ export default class AnimeService {
 
       return anime;
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -48,7 +48,7 @@ export default class AnimeService {
 
       return airingAnime;
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -64,7 +64,7 @@ export default class AnimeService {
         Result: `${AnimeCreateDto.title} Successfully Saved!!`,
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -80,7 +80,7 @@ export default class AnimeService {
 
       return { Result: `All Anime Airing Status set ${status}!!` };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -94,7 +94,7 @@ export default class AnimeService {
 
       return { message: `Deleting Anime With That Id: ${id}` };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -115,7 +115,7 @@ export default class AnimeService {
         message: `Updated Anime With this Name: ${animeUpdateDto.anime.title}`,
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 }

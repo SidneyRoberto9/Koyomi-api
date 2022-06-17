@@ -20,7 +20,7 @@ export default class JikanService {
           throw error;
         });
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -35,7 +35,7 @@ export default class JikanService {
           throw error;
         });
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -50,7 +50,7 @@ export default class JikanService {
           throw error;
         });
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -63,7 +63,7 @@ export default class JikanService {
         .then((data) => data.data.data)
         .catch((error) => error);
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -93,7 +93,7 @@ export default class JikanService {
         data: animes,
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 }

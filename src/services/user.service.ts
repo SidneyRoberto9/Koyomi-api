@@ -23,7 +23,7 @@ export default class UserService {
         Emails: [...user.map((u) => u.email)],
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -37,7 +37,7 @@ export default class UserService {
 
       return formatUser(user);
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -51,7 +51,7 @@ export default class UserService {
 
       return formatUser(user);
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -67,7 +67,7 @@ export default class UserService {
         Result: `Username: ${user.username} | role: ${user.role}`,
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
@@ -81,7 +81,7 @@ export default class UserService {
 
       return { Result: `Successfully delete ${id} user` };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 }

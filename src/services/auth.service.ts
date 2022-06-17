@@ -44,7 +44,7 @@ export default class AuthService {
         message: `User ${userDto.username} created successfully`,
       };
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 
