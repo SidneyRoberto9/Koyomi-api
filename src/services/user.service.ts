@@ -64,7 +64,8 @@ export default class UserService {
       }
 
       return {
-        Result: `Username: ${user.username} | role: ${user.role}`,
+        userName: user.username,
+        role: user.role,
       };
     } catch (error) {
       throw error.message;
