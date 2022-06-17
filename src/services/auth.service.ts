@@ -70,7 +70,7 @@ export default class AuthService {
 
       return formatUserToken(userJson, accessToken);
     } catch (error) {
-      throw error;
+      throw error.message;
     }
   }
 }
