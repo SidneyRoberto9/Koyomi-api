@@ -5,16 +5,16 @@
 
 </div>
 
-<h1 align="center">Animes Calendar Api</h1>
+<h1 align="center">Koyomi Api</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/SidneyRoberto9/anime-calendar-api?color=56BEB8">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/SidneyRoberto9/Koyomi-api?color=56BEB8">
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/SidneyRoberto9/anime-calendar-api?color=56BEB8">
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/SidneyRoberto9/Koyomi-api?color=56BEB8">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/SidneyRoberto9/anime-calendar-api?color=56BEB8">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/SidneyRoberto9/Koyomi-api?color=56BEB8">
 
-  <img alt="License" src="https://img.shields.io/github/license/SidneyRoberto9/anime-calendar-api?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/SidneyRoberto9/Koyomi-api?color=56BEB8">
 
   <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/SidneyRoberto9/anime-calendar-api?color=56BEB8" /> -->
 
@@ -64,7 +64,7 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ```bash
 # Clone this project
-$ git clone https://github.com/SidneyRoberto9/anime-calendar-api
+$ git clone https://github.com/SidneyRoberto9/Koyomi-api
 
 # Access
 $ cd animes-api
