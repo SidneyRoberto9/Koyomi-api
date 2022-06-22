@@ -37,31 +37,53 @@ export default (app: Router) => {
     }
   });
 
-  route.get('/anime/recommend', async (req: Request, res: Response) => {
-    try {
-      await jkServiceInstance
-        .getRecommendations()
-        .then((jk) => res.status(200).json(jk))
-        .catch((error) => {
-          throw error;
-        });
-    } catch (error) {
-      return res.status(500).json(error);
+  route.get(
+    '/anime/recommend',
+    async (req: Request, res: Response) => {
+      try {
+        await jkServiceInstance
+          .getRecommendations()
+          .then((jk) => res.status(200).json(jk))
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        return res.status(500).json(error);
+      }
     }
-  });
+  );
 
-  route.get('/anime/season/now', async (req: Request, res: Response) => {
-    try {
-      await jkServiceInstance
-        .getAnimesSeasonNow()
-        .then((jk) => res.status(200).json(jk))
-        .catch((error) => {
-          throw error;
-        });
-    } catch (error) {
-      return res.status(400).json(error);
+  route.get(
+    '/anime/season/now',
+    async (req: Request, res: Response) => {
+      try {
+        await jkServiceInstance
+          .getAnimesSeasonNow()
+          .then((jk) => res.status(200).json(jk))
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        return res.status(400).json(error);
+      }
     }
-  });
+  );
+
+  route.get(
+    '/anime/:year/:season',
+    async (req: Request, res: Response) => {
+      try {
+        await jkServiceInstance
+          .getAnimesSeason(req.params.year, req.params.season)
+          .then((jk) => res.status(200).json(jk))
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        return res.status(400).json(error);
+      }
+    }
+  );
 
   route.get('/anime/:name', async (req: Request, res: Response) => {
     try {

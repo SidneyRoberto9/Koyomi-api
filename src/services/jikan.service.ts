@@ -30,7 +30,10 @@ export default class JikanService {
     try {
       return await axios
         .get(url)
-        .then(async (data) => await formatJkGetAnimeByName(data.data.data[0]))
+        .then(
+          async (data) =>
+            await formatJkGetAnimeByName(data.data.data[0])
+        )
         .catch((error) => {
           throw error;
         });
@@ -55,7 +58,8 @@ export default class JikanService {
   }
 
   async getRecommendations() {
-    const url: string = 'https://api.jikan.moe/v4/recommendations/anime';
+    const url: string =
+      'https://api.jikan.moe/v4/recommendations/anime';
 
     try {
       return await axios
@@ -69,7 +73,8 @@ export default class JikanService {
 
   async getAnimesSeasonNow() {
     try {
-      const url: string = 'https://api.jikan.moe/v4/seasons/now?page=';
+      const url: string =
+        'https://api.jikan.moe/v4/seasons/now?page=';
       const animes: AnimeModelI[] = [];
       let empty: number = 0;
       let qtd: number = 0;
@@ -81,6 +86,36 @@ export default class JikanService {
             let content = data.data.data;
             content.length === 0 && empty++;
             qtd += content.length;
+            animes.push(...formatJkArray(content));
+          })
+          .catch((error) => {
+            throw error;
+          });
+      }
+
+      return {
+        qtd: qtd,
+        data: animes,
+      };
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  async getAnimesSeason(year: string, season: string) {
+    try {
+      const url: string = `https://api.jikan.moe/v4/seasons/${year}/${season}?page=`;
+      const animes: AnimeModelI[] = [];
+      let empty: number = 0;
+      let qtd: number = 0;
+
+      for (let index = 1; empty === 0; index++) {
+        await axios
+          .get(url + index)
+          .then((data) => {
+            let content = data.data.data;
+            qtd = data.data.pagination.items.total;
+            content.length === 0 && empty++;
             animes.push(...formatJkArray(content));
           })
           .catch((error) => {
