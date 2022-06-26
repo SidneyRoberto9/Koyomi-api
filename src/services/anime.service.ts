@@ -3,6 +3,7 @@ import { Inject, Service } from 'typedi';
 import { AnimeCreateDto, AnimeUpdateDto } from '../interfaces/anime.interface';
 import { AnimeModel } from '../models/anime.model';
 import { isEmpty } from './../utils/format.util';
+import { uploadFile } from './../utils/upload.util';
 
 @Service()
 export default class AnimeService {
@@ -52,8 +53,10 @@ export default class AnimeService {
     }
   }
 
-  public async saveAnime(AnimeCreateDto: AnimeCreateDto) {
+  public async saveAnime(AnimeCreateDto: AnimeCreateDto, file: any) {
     try {
+      AnimeCreateDto.image = await uploadFile(file);
+
       const anime = new this.animeModel(AnimeCreateDto).save();
 
       if (isEmpty(anime)) {
@@ -106,9 +109,7 @@ export default class AnimeService {
       );
 
       if (isEmpty(anime)) {
-        throw new Error(
-          `Anime Not Found With This Name: ${animeUpdateDto.anime.title}`
-        );
+        throw new Error(`Anime Not Found With This Name: ${animeUpdateDto.anime.title}`);
       }
 
       return {

@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import multer from 'multer';
+import path from 'path';
 import Container from 'typedi';
 
 import { AnimeCreateDto, AnimeUpdateDto } from '../../interfaces/anime.interface';
@@ -11,6 +13,17 @@ export default (app: Router) => {
   app.use('/anime', route);
 
   const animeServiceInstance = Container.get(AnimeService);
+
+  const storage = multer.diskStorage({
+    destination: (req, file, exit) => {
+      exit(null, __dirname + '../../../tmp/');
+    },
+    filename(req, file, exit) {
+      exit(null, Date.now() + path.extname(file.originalname));
+    },
+  });
+
+  const upload = multer({ storage });
 
   //Get All Anime
   route.get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -25,17 +38,14 @@ export default (app: Router) => {
   });
 
   //Get Airing Animes
-  route.get(
-    '/airing/full',
-    (req: Request, res: Response, next: NextFunction) => {
-      animeServiceInstance
-        .getAiringAnimes()
-        .then((anime) => res.status(200).json(anime))
-        .catch((error) => {
-          next(error);
-        });
-    }
-  );
+  route.get('/airing/full', (req: Request, res: Response, next: NextFunction) => {
+    animeServiceInstance
+      .getAiringAnimes()
+      .then((anime) => res.status(200).json(anime))
+      .catch((error) => {
+        next(error);
+      });
+  });
 
   //Get Anime by Id
   route.get('/:id', (req: Request, res: Response, next: NextFunction) => {
@@ -48,28 +58,29 @@ export default (app: Router) => {
   });
 
   //ADD new Anime
-  route.post('/', (req: Request, res: Response, next: NextFunction) => {
-    animeServiceInstance
-      .saveAnime(req.body as AnimeCreateDto)
-      .then((anime) => res.status(200).json(anime))
-      .catch((error) => {
-        next(error);
-      });
-  });
-
-  //Change Airing Status of All Animes
-  route.get(
-    '/airingAll/:value',
+  route.post(
+    '/',
+    upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
-      const status = req.params.value === 'true';
       animeServiceInstance
-        .changeAiringStatusAll(status)
+        .saveAnime(req.body as AnimeCreateDto, req.file)
         .then((anime) => res.status(200).json(anime))
         .catch((error) => {
           next(error);
         });
     }
   );
+
+  //Change Airing Status of All Animes
+  route.get('/airingAll/:value', (req: Request, res: Response, next: NextFunction) => {
+    const status = req.params.value === 'true';
+    animeServiceInstance
+      .changeAiringStatusAll(status)
+      .then((anime) => res.status(200).json(anime))
+      .catch((error) => {
+        next(error);
+      });
+  });
 
   //Delete Anime
   route.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
