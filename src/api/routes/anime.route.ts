@@ -58,13 +58,22 @@ export default (app: Router) => {
   });
 
   //ADD new Anime
+  route.post('/', (req: Request, res: Response, next: NextFunction) => {
+    animeServiceInstance
+      .saveAnime(req.body as AnimeCreateDto)
+      .then((anime) => res.status(200).json(anime))
+      .catch((error) => {
+        next(error);
+      });
+  });
+
   route.post(
-    '/',
+    '/img',
     upload.single('file'),
     (req: Request, res: Response, next: NextFunction) => {
       animeServiceInstance
-        .saveAnime(req.body as AnimeCreateDto, req.file)
-        .then((anime) => res.status(200).json(anime))
+        .uploadAnimeImg(req.file)
+        .then((imgUrl) => res.status(200).json(imgUrl))
         .catch((error) => {
           next(error);
         });

@@ -53,10 +53,8 @@ export default class AnimeService {
     }
   }
 
-  public async saveAnime(AnimeCreateDto: AnimeCreateDto, file: any) {
+  public async saveAnime(AnimeCreateDto: AnimeCreateDto) {
     try {
-      AnimeCreateDto.image = await uploadFile(file);
-
       const anime = new this.animeModel(AnimeCreateDto).save();
 
       if (isEmpty(anime)) {
@@ -66,6 +64,16 @@ export default class AnimeService {
       return {
         Result: `${AnimeCreateDto.title} Successfully Saved!!`,
       };
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  public async uploadAnimeImg(file: any) {
+    try {
+      const imgLink = await uploadFile(file);
+
+      return imgLink;
     } catch (error) {
       throw error.message;
     }
