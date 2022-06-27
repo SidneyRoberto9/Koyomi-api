@@ -42,6 +42,6 @@ export const uploadFile = async (file: any) => {
 
     return `https://drive.google.com/uc?export=view&id=${response.data.id}`;
   } catch (error) {
-    console.log('Erro in create file');
+    throw error.message;
   }
 };
