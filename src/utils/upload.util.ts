@@ -12,11 +12,7 @@ export const uploadFile = async (file: any) => {
       client_email: config.GOOGLE_EMAIL,
       client_id: config.GOOGLE_CLIENT_ID,
     },
-    scopes: [
-      'https://www.googleapis.com/auth/drive',
-      'https://www.googleapis.com/auth/drive.appdata',
-      'https://www.googleapis.com/auth/drive.file',
-    ],
+    scopes: ['https://www.googleapis.com/auth/drive'],
   });
 
   const driveService = google.drive({
@@ -28,6 +24,7 @@ export const uploadFile = async (file: any) => {
     name: file.filename,
     parents: [GOOGLE_FOLDER_ID],
   };
+  console.log(file.path);
 
   const media = {
     mimeType: file.mimeType,
