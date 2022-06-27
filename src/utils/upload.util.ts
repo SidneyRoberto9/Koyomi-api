@@ -7,11 +7,7 @@ export const uploadFile = async (file: any) => {
   const GOOGLE_FOLDER_ID = config.GOOGLE_FOLDER_ID;
 
   const auth = new google.auth.GoogleAuth({
-    credentials: {
-      private_key: config.GOOGLE_PRIVATE_KEY,
-      client_email: config.GOOGLE_EMAIL,
-      client_id: config.GOOGLE_CLIENT_ID,
-    },
+    keyFile: config.google_credentials,
     scopes: ['https://www.googleapis.com/auth/drive'],
   });
 
@@ -24,7 +20,6 @@ export const uploadFile = async (file: any) => {
     name: file.filename,
     parents: [GOOGLE_FOLDER_ID],
   };
-  console.log(file.path);
 
   const media = {
     mimeType: file.mimeType,
